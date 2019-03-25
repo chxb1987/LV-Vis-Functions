@@ -1,0 +1,420 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>lambda genesys readme</TITLE>
+<META NAME="subject" CONTENT="DC Power using LabView Drivers">
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<FONT FACE="Arial"><H2>Lambda Genesys Instrument Driver Readme</H2>
+</FONT><H4>Table of Contents:</H4><DIR>
+<DIR>
+
+<PRE><A HREF="#section_01">1.  Overview</A>
+<A HREF="#section_02">2.  Required Software</A>
+<A HREF="#section_03">3.  Installation Instructions</A>
+<A HREF="#section_04">4.  Accessing the Driver in LabVIEW</A>
+<A HREF="#section_05">5.  Using the Instrument Driver</A>
+<A HREF="#section_06">6.  Addressing the Instruments</A>
+<A HREF="#section_07">7.  Custom Error Codes</A>
+<A HREF="#section_08">8.  Unsupported Features and Restrictions</A>
+<A HREF="#section_09">9.  IEEE Bus Activity</A>
+<A HREF="#section_10">10. Known Issues</A>
+<A HREF="#section_11">11. Customer Support</A>
+<A HREF="#section_12">12. Revision History</A></PRE></DIR>
+</DIR>
+
+<H4><A NAME="section_01"></A>1. Overview</H4>
+<PRE>Instrument Driver Technology:&#9;Plug and Play
+Supported Language(s):  &#9;LabVIEW  6.1
+Supported Regional Settings:&#9;English and Universal desktops
+&#9;&#9;&#9;&#9;&#9;(period or comma separator for 
+&#9;&#9;&#9;&#9;&#9; number decimal point)
+
+Supported Models:  &#9;&#9;Lambda Genesys Series DC Power Supplies
+Models Tested:  &#9;&#9;750 and 1500 Watt, and Half-Rack,  
+&#9;&#9;&#9;&#9;&#9;with the IEEE option installed
+Interfaces:&#9;&#9;&#9;IEEE-488
+&#9;&#9;&#9;&#9;IEEE-488 with Multi-Drop
+Firmware Revision Tested:  &#9;2.0-C
+
+Certified:  &#9;&#9;&#9;No
+NI Supported:  &#9;&#9;&#9;No
+Source Code Available:  &#9;Yes
+
+Driver Revision:  &#9;&#9;REV_C00, 09/2005, LV_6.1
+Original Release Date:  &#9;April 2005
+Current Revision Date:  &#9;Sept  2005</PRE>
+<H4><A NAME="section_02"></A>2. Required Software</H4>
+<PRE>Some software components need to be installed before using this 
+instrument driver. The minimum versions of these components are listed below,
+and can be downloaded from the Download Site.
+
+LabView 6.1  or later
+VISA    2.6  or later
+
+Note: VISA has additional software requirements. For example, for the
+IEEE-488 port, NI-VISA requires that NI-488.2 be installed on your system. 
+Check with VISA help for additional support software and hardware 
+requirements.    </PRE>
+<H4><A NAME="section_03"></A>3. Installation Instructions</H4>
+<PRE>Obtain a copy of the driver software.  It is packaged in a file with a name 
+similar to: 
+                "GENie.zip" 
+
+A)  Use Windows Explorer and navigate to folder:
+&#9;...\Program Files \National Instruments \LabVIEW...\instr.lib
+
+B)  Create a new folder: GENie
+
+C)  Use the ZIP utility, such as WinZip.exe,  to extract the driver files 
+    into the "GENie" folder
+
+D)  You will now have a "...\instr.lib\GENie\" folder containing:
+&#9;"GENie.llb"
+&#9;"_GENie.llb"
+&#9;five MNU menu files
+&#9;"lambda genesys readme.htm" (this file) and two GIF pictures
+
+The menu files and VI libraries (LLB) make up an instrument driver. 
+The menu files allow you to view the driver VIs from the Functions palette.
+The " GENie.llb" VI library contains the instrument driver VIs.
+The "_GENie.llb"  VI library contains support drivers not normally used
+  by the programmer and they do not appear on the Function pallet (see next)</PRE>
+<H4><A NAME="section_04"></A>4. Accessing the Driver in LabVIEW</H4>
+<PRE>There is normally no need to view the library file because the driver 
+functions may be picked from a palette menu.
+
+A)  Right-click on a blank place on the VI diagram
+    See the "Functions" palette open.  Navigate:
+&#9;Functions -&gt;  
+&#9;&#9;Instrument I/O -&gt;  
+&#9;&#9;&#9;Instrument Drivers -&gt;  
+&#9;&#9;&#9;&#9;Lambda GENESYS IEEE DC Power
+
+B)  Alternately,  click diagram's menu bar:  
+&#9;Window -&gt;  "Show Functions Palette" and navigate the above menus </PRE>
+<H4><A NAME="section_05"></A>5. Using the Instrument Driver</H4>
+<PRE>LabVIEW:
+To verify communication with your instrument and test a typical remote
+instrument operation, you should first open the Getting Started or Example 
+VIs the instrument driver. Look over each of the controls and set them 
+appropriately.  Generally, with the exception of the address field, the 
+defaults for most controls will be sufficient for your first run. You will 
+need to set the instrument resource name appropriately. After running the VI, 
+check to see that reasonable data was returned and an error was not reported 
+in the error cluster.
+
+After you have verified basic communication with your instrument, you might 
+want to customize instrument control for your needs. If your application 
+needs are similar to the Getting Started or Example VI, the simplest means of 
+creating a customized VI is to save a copy of the Getting Started or Example 
+VI by selecting "Save As" from the File menu. You can then modify this example 
+to meet your specific needs.
+
+For more details, reference the LabVIEW Help under:
+                                       Help » VI, Function, and How-To Help.&nbsp;</PRE>
+<H4><A NAME="section_06"></A>6. Addressing the Instruments</H4>
+<PRE>Each driver has two address inputs for the two ways that multiple Genesys 
+power supplies may be used on the IEEE-488 bus. The inputs are "VISA" and 
+"Slave&nbsp;Addr&nbsp;(none)".
+
+    Note: In diagrams below, "GEN Initialize.vi" is not shown. This VI 
+          is required to enable reading back instrument errors.
+
+<U>POINT-TO-POINT ADDRESSING
+</U>This is the traditional IEEE where each Genesys power supply has its own IEEE 
+cable connecting it to the IEEE Controller. Do not wire anything to the 
+"Slave&nbsp;Addr" input (or keep the input at it's default "-1").
+
+<IMG SRC="Image2.gif" >
+<U>MULTI-DROP ADDRESSING
+</U>This is a configuration where one Genesys power supply has an IEEE 
+connection, but it then 'daisy-chains' to other power supplies using the 
+RS-485 (4-wire serial) bus. The IEEE ("Master") has an IEEE address, the 
+other ("Slave") instruments have serial addresses that must be different than 
+the Master's address.
+
+To use Multi-Drop addressing:
+A. The Master device "VISA" input is set to the Master's IEEE address
+B. The Slave device "VISA" input is wired to the Master's "VISA out"
+C. The Slave device "Slave Addr" is set to the device's Serial address
+D. The "Slave Addr" is sticky (or latched or cached).  If it is set once 
+     (to anything but the default -1), any more driver calls will be to
+     the same slave until a new slave address is wired to any driver call.
+
+<IMG SRC="Image3.gif" ></PRE>
+<H4><A NAME="section_07"></A>7. Custom Error Codes</H4>
+<PRE>Every driver checks for errors and any found are returned in the "error out"
+cluster. There are three sources of errors and only the highest priority 
+error is returned:
+
+&#9;&#9;&#9;<B>ERROR TYPES</PRE></B>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=7 WIDTH=660>
+<TR><TD WIDTH="15%" VALIGN="TOP">
+<B><PRE>Priority</PRE></B></TD>
+<TD WIDTH="22%" VALIGN="TOP">
+<B><PRE>Type</PRE></B></TD>
+<TD WIDTH="63%" VALIGN="TOP">
+<B><PRE>Description</PRE></B></TD>
+</TR>
+<TR><TD WIDTH="15%" VALIGN="TOP">
+<PRE>Highest</PRE></TD>
+<TD WIDTH="22%" VALIGN="TOP">
+<PRE>VISA Error</PRE></TD>
+<TD WIDTH="63%" VALIGN="TOP">
+<PRE>Returned by VISA functions such as Write or Read
+Examples: No device at the address detected.
+          After query sent, no response received</PRE></TD>
+</TR>
+<TR><TD WIDTH="15%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="22%" VALIGN="TOP">
+<PRE>Device Error</PRE></TD>
+<TD WIDTH="63%" VALIGN="TOP">
+<PRE>Returned by the instrument's "SYSTEM:ERROR" queue
+Examples: see "CUSTOM DEVICE ERRORS" table below</PRE></TD>
+</TR>
+<TR><TD WIDTH="15%" VALIGN="TOP">
+<PRE>Lowest</PRE></TD>
+<TD WIDTH="22%" VALIGN="TOP">
+<PRE>Response Error</PRE></TD>
+<TD WIDTH="63%" VALIGN="TOP">
+<PRE>Driver received response but it is invalid
+Examples: see "CUSTOM RESPONSE ERRORS" table below</PRE></TD>
+</TR>
+</TABLE>
+
+<PRE>
+
+Device errors are ones reported from a "SYSTEM:ERR?" query. This is done 
+automatically by most drivers.  If an error is returned, it is in the 
+SCPI error format:
+&#9;&#9;&lt;number -500 to +500&gt; &lt;comma&gt; &lt;message string in quotes&gt;
+For a complete list of possible errors, refer to the: 
+&#9;&#9;Technical Manual for IEE Programming Interface 
+&#9;&#9;Section 3, "System:Error Messages" 
+
+The VISA standard allows custom error codes in the range:
+&#9;&#9;-1073999873 to -1074001919  ( BFFC0801 to BFFC0FFF hex)
+
+The SCPI error number is converted to a VISA error number using this formula:
+&#9;&#9;&lt;absolute value of SCPI error number&gt; + &lt;BFFC0900 hex&gt;
+See "GEN Error Query.vi" for details on the code conversion.
+All returns are errors; there are no warnings.
+
+&#9;&#9;&#9;<B>EXAMPLES:  CUSTOM DEVICE ERRORS</PRE></B>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=7 WIDTH=640>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<B><PRE>Decimal Code</PRE></B></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<B><PRE>Hex Code</PRE></B></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<B><PRE>Meaning</PRE></B></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001564</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0964</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>-100,"Command error;address nn"
+general error, IEEE command not executed</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001560</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0968</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>-104,"Data type error;address nn"
+value missing from command or wrong value type</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001442</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC09DE</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>-222,"Data out of range;address nn"
+attempt to program beyond instrument's ratings
+applies to volt limit, current limit , OVP and UVL</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001423</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC09F1</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>-241,"Hardware missing;address nn"
+in an IEEE Multi-Drop system, error while opening
+comm to a slave device at serial address "nn".
+Slave device not detected</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001363</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0A2D</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>+301,"PV above OVP;address nn"
+attempt to program voltage above the Over-Voltage
+setting but within the instrument's ratings</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001357</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0A33</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>+307,"On during fault;address nn"
+attempt to turn power supply output ON while
+a fault is keeping the output off</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001321</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0A57</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>+343,"Internal timeout;address nn"
+in an IEEE Multi-Drop system, no response from
+an addressed slave device</PRE></TD>
+</TR>
+</TABLE>
+
+<PRE>
+
+&#9;&#9;&#9;<B>CUSTOM RESPONSE ERRORS</PRE></B>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=7 WIDTH=640>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<B><PRE>Decimal Code</PRE></B></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<B><PRE>Hex Code</PRE></B></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<B><PRE>Meaning</PRE></B></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074003951</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0011</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>No response from "ID Query" in "Initialize.vi".
+May be an incorrect address setting or the
+instrument is not communicating</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001904</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0810</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>Could not parse identity fields to find revisions</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001902</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0812</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>Could not parse identity fields to get the
+model number ("GENvvv-ccc")</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001900</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0814</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>Attempt to send query to "Write to Instrument".
+Cannot have "?" in command string</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001898</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0816</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>Attempt to send command to "Read Instrument Data".
+Must have "?" in query string</PRE></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<PRE>-1074001896</PRE></TD>
+<TD WIDTH="17%" VALIGN="TOP">
+<PRE>BFFC0818</PRE></TD>
+<TD WIDTH="65%" VALIGN="TOP">
+<PRE>"BUSY" bit in Status Byte stuck high after command 
+sent. Command not processed correctly</PRE></TD>
+</TR>
+</TABLE>
+
+<H4><A NAME="section_08"></A>8. Unsupported Features and Restrictions</H4>
+<H5>A. Unsupported Features</H5>
+<PRE>The following Genesys capabilities are not supported by these drivers:
+- SRQ interrupts 
+- Event and Enable registers
+- Triggered events
+- Self-Test
+- Calibration commands</PRE>
+<H5>B. Applicable Genesys Firmware Revisions</H5>
+<PRE>1. These drivers are <I>not</I> compatible with Genesys units having firmware
+   revision "1.4-B" or earlier (made before July 2003)
+2. For Multi-Drop systems, which use serial Slave addressing, all devices
+   must have firmware revision "2.0-C" or later (made after Oct 2005)
+
+   Note: The Genesys firmware revision is found in the last field returned 
+         by the IEEE "*IDN?" query, the serial "IDN?" query or by running 
+         the driver "GEN Revision Query.vi"</PRE>
+<H5>C. Restriction for Service Requesting</H5>
+<PRE>These drivers are <I>not</I> compatible with any programs that enables the
+Genesys Service Request registers (the "*SRE nn" command). This is because
+the drivers automatically read the serial poll after each command so
+the Service Request signal will be cleared</PRE>
+<H5>D. Restriction for SYSTEM:ERROR Fault Event Reporting</H5>
+<PRE>The programmer may <I>not</I> use the System Error queue to report power supply 
+Fault events. This is because the drivers clear the error queue prior to
+sending any command or query</PRE>
+<H4><A NAME="section_09"></A>9. IEEE Bus Activity</H4>
+<PRE>The user who attaches an IEEE bus analyzer while these drivers are
+being used will see the following bus activity with each driver call:
+
+1. A serial poll is read from the addressed power supply. If a
+   pending SYSTEM:ERROR or response Message exist, they are cleared.
+2. The command or query is sent to the addressed supply
+3. A serial poll is taken every 10 milliseconds until the BUSY bit goes 
+   low.  The SYST bit or MAV bit will go high at this time if there was 
+   an error in the command or if a response message is available
+4. If the SYST bit shows an error occurred, a "SYST:ERR?" query is sent
+   and the response read 
+5. If the MAV bit was set, the response is read</PRE>
+<H4><A NAME="section_10"></A>10. Known Issues</H4>
+<PRE>There are currently no known issues with this instrument driver.</PRE>
+<H4><A NAME="section_11"></A>11. Customer Support</H4>
+<PRE>For technical support and driver upgrades, you can contact Lambda at 
+the following telephone number:
+
+      Lambda Americas&#9;&#9;(732)922-9300 Ext 209 
+      Customer Service          <A HREF="mailto:dave.ransom@lambda.com">dave.ransom@lambda.com</A>
+      405 Essex Road
+      Neptune, New Jersey, 07753  USA
+
+Or visit our support web page at: 
+&#9;&#9;&#9;&#9;<A HREF="http://www.lambda-emi.com/service.htm">http://www.lambda-emi.com/service.htm</A>
+
+Or contact your Lambda Representative</PRE>
+<H4><A NAME="section_12"></A>12. Revision History</H4>
+<PRE>RevDbeta1, 08/2003, LV_6.1
+&#9;Original Release
+&#9;Drivers are <I>not</I> "Plug and Play" compatible
+&#9;by Walter Heyck
+&#9;   Lambda Americas
+
+REV_B03, 07/2005, LV_6.1
+&#9;- Re-wrote drivers to be "Plug and Play" compatible.
+&#9;- Driver icons now use glyphs instead of text.
+&#9;- Added function pallet menu (*.mnu) files).
+&#9;- Made instrument errors return VISA compliant error values.
+&#9;- Deleted separate "GEN Errors.txt" file, error descriptions now
+&#9; formulated in the driver Vis.
+&#9;- Added this "readme.htm" file.
+&#9;by Walter Heyck
+&#9;   Lambda Americas
+
+REV_C00, 09/2005, LV_6.1
+&#9;- Added IEEE Multi-Drop capability
+&#9;- Added "Slave Addr (none)" control to most driver VIs
+&#9;by Walter Heyck
+&#9;   Lambda Americas
+</PRE></BODY>
+</HTML>

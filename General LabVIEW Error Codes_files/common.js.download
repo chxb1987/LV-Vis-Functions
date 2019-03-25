@@ -1,0 +1,43 @@
+/**************************************************************
+*
+* Include common javascript files
+* (the document.writeln method works on all supported browsers)
+*
+***************************************************************/
+
+/* This file is specifically written to call javascript files on Mac/UNIX machines. */
+
+document.writeln("<script src='../common/variables.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/helpserver.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/lvversion.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/objectnames.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/domtools.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/arraytools.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/initpagedyn.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/checkinstalled.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/dynamiccontent.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/dynamiclinks.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/launchhelp.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/linking.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/stylesheets.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/feedbacklink.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/web.js' type='text/javascript'></script>");
+document.writeln("<script src='../common/pdf.js' type='text/javascript'></script>");
+
+
+/**************************************************************
+*
+* Include a javascript file in an HTML file
+* (This method does not work on Safari for JS files that need to be available before the page renders)
+*
+***************************************************************/
+
+function include_js(js_file) {
+	var doc_head = document.getElementsByTagName('head').item(0);
+	var jsNode = document.createElement('script');
+	jsNode.setAttribute('language', 'javascript');
+	jsNode.setAttribute('type', 'text/javascript');
+	jsNode.setAttribute('src', js_file);
+	doc_head.appendChild(jsNode);
+	return false;
+}
